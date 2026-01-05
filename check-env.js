@@ -1,7 +1,15 @@
 // Quick script to verify your environment variables are set correctly
 // Run with: node check-env.js
+// 
+// Note: For production, environment variables are set in Vercel Dashboard
+// This script checks local .env.local (for development only)
 
-require('dotenv').config({ path: '.env.local' });
+// Try to load .env.local if it exists (for local development)
+try {
+  require('dotenv').config({ path: '.env.local' });
+} catch (e) {
+  // .env.local not found - that's okay for production
+}
 
 console.log('\n🔍 Checking Supabase Configuration...\n');
 

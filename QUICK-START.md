@@ -16,14 +16,30 @@ Anon Key: eyJhbGc... (long string starting with eyJ)
 
 ### ② Edit `.env.local` File
 
-Open `.env.local` in your project root and paste your actual values:
-
+**Copy `.env.example` to `.env.local`:**
 ```bash
-NEXT_PUBLIC_SUPABASE_URL=https://pcrdpephzjfanaxelzgz.supabase.co
-NEXT_PUBLIC_SUPABASE_ANON_KEY=your_actual_anon_key_here
+cp .env.example .env.local
 ```
 
+Then edit `.env.local` and add your actual values:
+
+```bash
+# Required for the app (REST API)
+NEXT_PUBLIC_SUPABASE_URL=https://pcrdpephzjfanaxelzgz.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_actual_anon_key_here
+
+# Optional: Direct PostgreSQL (only for server-side operations)
+# DATABASE_URL=postgresql://postgres.pcrdpephzjfanaxelzgz:YOUR_PASSWORD@aws-1-ap-south-1.pooler.supabase.com:5432/postgres
+```
+
+**Important:**
+- Use the **Project URL** (`https://pcrdpephzjfanaxelzgz.supabase.co`), NOT the pooler URL
+- Get your anon key from: Supabase Dashboard → Settings → API → anon public
+- The pooler URL is for direct PostgreSQL access (optional, not used by the app)
+
 **Save the file!**
+
+📖 See **[ENV-SETUP.md](./ENV-SETUP.md)** for detailed environment variable guide.
 
 ### ③ Create Database Tables
 
