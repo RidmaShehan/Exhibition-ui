@@ -161,10 +161,22 @@ export const getVisitorDetails = async (
 
     if (metadataError) console.error('Metadata fetch error:', metadataError);
 
+    // Extract program names from Supabase response
+    const programNames: string[] = [];
+    if (programs) {
+      for (const item of programs) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const program = (item as any)?.programs;
+        if (program?.program_name) {
+          programNames.push(program.program_name);
+        }
+      }
+    }
+
     return {
       name: visitor.name,
       work_phone: visitor.work_phone,
-      programs: programs?.map((p: any) => p.programs.program_name) || [],
+      programs: programNames,
       metadata: metadata || null,
     };
   } catch (error) {

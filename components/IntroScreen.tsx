@@ -35,7 +35,7 @@ const IntroScreen: React.FC<IntroScreenProps> = ({ onComplete }) => {
       const words = text.split(' ');
       titleRef.current.innerHTML = '';
 
-      words.forEach((word, wordIndex) => {
+      words.forEach((word) => {
         const wordSpan = document.createElement('span');
         wordSpan.style.display = 'inline-block';
         wordSpan.style.marginRight = '0.3em';

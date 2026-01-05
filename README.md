@@ -2,156 +2,166 @@
 
 A modern, responsive Next.js 14 application for Times School Higher Education exhibition visitor registration with beautiful GSAP animations.
 
-## 🚀 Features
+## 🚀 Quick Start
 
-- **Modern Tech Stack**: Built with Next.js 14 (App Router), TypeScript, and Tailwind CSS
+### Local Development
+
+```bash
+# Install dependencies
+npm install
+
+# Run development server
+npm run dev
+
+# Open http://localhost:3000
+```
+
+### Deploy to Vercel
+
+See **[DEPLOY.md](./DEPLOY.md)** for quick deployment guide or **[VERCEL-DEPLOYMENT.md](./VERCEL-DEPLOYMENT.md)** for detailed instructions.
+
+---
+
+## ✨ Features
+
+- **Modern Tech Stack**: Next.js 14 (App Router), TypeScript, Tailwind CSS
 - **Professional Animations**: Smooth GSAP-powered animations throughout
 - **Mobile-First Design**: Fully responsive across all devices
+- **Multi-Program Selection**: Button-style course selector
+- **Automatic Data Collection**: IP, location, device, browser tracking
 - **Form Validation**: Client-side validation with helpful error messages
-- **Supabase Integration**: Ready-to-use database integration
+- **Supabase Integration**: PostgreSQL database with organized tables
 - **Type-Safe**: Full TypeScript implementation with strict mode
-- **Clean Architecture**: Modular component structure following SOLID principles
+- **Production-Ready**: Optimized for Vercel deployment
+
+---
 
 ## 📋 Prerequisites
 
 - Node.js 18.x or higher
 - npm or yarn package manager
+- Supabase account (for database)
 
-## 🛠️ Installation
+---
 
-1. **Clone the repository**
-```bash
-cd Exhibition-ui
-```
+## 🛠️ Setup
 
-2. **Install dependencies**
+### 1. Install Dependencies
+
 ```bash
 npm install
 ```
 
-3. **Set up environment variables**
+### 2. Environment Variables
 
-Copy the `.env.example` file to `.env.local`:
-```bash
-cp .env.example .env.local
-```
+Create `.env.local`:
 
-Edit `.env.local` and add your Supabase credentials:
 ```env
 NEXT_PUBLIC_SUPABASE_URL=your_supabase_project_url
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
 ```
 
-4. **Set up Supabase database** (if using Supabase)
+### 3. Database Setup
 
-Create a table in your Supabase project:
-```sql
-CREATE TABLE exhibition_visitors (
-  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
-  name TEXT NOT NULL,
-  work_phone TEXT NOT NULL,
-  region TEXT,
-  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
-);
+1. Go to Supabase Dashboard → SQL Editor
+2. Run `supabase-setup.sql` to create tables
+3. Verify tables are created
 
--- Enable Row Level Security (optional but recommended)
-ALTER TABLE exhibition_visitors ENABLE ROW LEVEL SECURITY;
+### 4. Add Logo (Optional)
 
--- Create a policy to allow inserts (adjust as needed)
-CREATE POLICY "Allow public inserts" ON exhibition_visitors
-  FOR INSERT TO public
-  WITH CHECK (true);
-```
+Place your logo at: `public/images/logo.png`
 
-## 🚦 Running the Application
+See **[LOGO-SETUP.md](./LOGO-SETUP.md)** for details.
 
-**Development mode:**
-```bash
-npm run dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) in your browser.
-
-**Production build:**
-```bash
-npm run build
-npm start
-```
+---
 
 ## 📁 Project Structure
 
 ```
 Exhibition-ui/
-├── app/
-│   ├── layout.tsx          # Root layout with metadata
-│   ├── page.tsx            # Home page
-│   └── globals.css         # Global styles
-├── components/
-│   ├── ExhibitionRegistration.tsx  # Main component
-│   ├── IntroScreen.tsx            # Intro animation screen
-│   ├── RegistrationForm.tsx       # Form component
-│   ├── SuccessScreen.tsx          # Success state component
-│   ├── Logo.tsx                   # Logo SVG component
-│   └── PaperPlane.tsx             # Paper plane animation
-├── lib/
-│   ├── supabase.ts         # Supabase client and API calls
-│   └── validation.ts       # Form validation logic
-├── types/
-│   └── index.ts            # TypeScript type definitions
-├── package.json
-├── tsconfig.json
-├── tailwind.config.ts
-└── next.config.js
+├── app/                    # Next.js App Router
+│   ├── layout.tsx         # Root layout
+│   ├── page.tsx           # Home page
+│   └── globals.css        # Global styles
+├── components/            # React components
+│   ├── ExhibitionRegistration.tsx
+│   ├── IntroScreen.tsx
+│   ├── RegistrationForm.tsx
+│   ├── SuccessScreen.tsx
+│   ├── ProgramSelector.tsx
+│   ├── Logo.tsx
+│   └── PaperPlane.tsx
+├── lib/                   # Business logic
+│   ├── supabase.ts       # Database operations
+│   ├── validation.ts     # Form validation
+│   └── metadata.ts       # IP/location tracking
+├── types/                 # TypeScript types
+│   └── index.ts
+├── public/                # Static assets
+│   └── images/
+│       └── logo.png      # Your logo here
+└── [config files]
 ```
 
-## 🎨 Key Features Explained
+---
 
-### Animations
-All animations are powered by GSAP for smooth, performant transitions:
-- **Intro Screen**: Logo fade-in, character-by-character title animation
-- **Form Entry**: Staggered element animations
-- **Paper Plane**: Flying animation on form submission
-- **Success Screen**: Bounce animations and staggered reveals
+## 🎨 Key Features
 
-### Responsive Design
-- Mobile-first approach with Tailwind CSS
-- Breakpoints: `sm` (640px), `md` (768px), `lg` (1024px), `xl` (1280px)
-- Touch-friendly buttons and inputs
-- Optimized typography scaling
+### Multi-Program Selection
+- Button-style selection interface
+- Select multiple courses
+- Grouped by category
+- Visual feedback with checkmarks
 
-### Form Validation
-- Required field validation
-- Phone number format validation
-- Real-time error clearing
-- Accessible error messages
+### Automatic Data Collection
+- IP address & location
+- Device type (Mobile/Tablet/Desktop)
+- Browser information
+- Date & time of submission
 
-## 🔧 Configuration
+### Database Structure
+- **exhibition_visitors** - Core visitor data
+- **programs** - Available courses
+- **visitor_programs** - Selected programs
+- **visitor_metadata** - Location & device data
 
-### Customizing Animations
-Edit timing and easing in component files:
-```typescript
-// Example: components/IntroScreen.tsx
-tl.fromTo(
-  element,
-  { opacity: 0, y: 20 },
-  { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' }
-);
+---
+
+## 🚀 Deployment
+
+### Vercel (Recommended)
+
+1. Push code to GitHub
+2. Import to Vercel
+3. Add environment variables
+4. Deploy!
+
+See **[DEPLOY.md](./DEPLOY.md)** for quick guide.
+
+---
+
+## 📚 Documentation
+
+- **[DEPLOY.md](./DEPLOY.md)** - Quick deployment guide
+- **[VERCEL-DEPLOYMENT.md](./VERCEL-DEPLOYMENT.md)** - Complete Vercel setup
+- **[LOGO-SETUP.md](./LOGO-SETUP.md)** - Logo configuration
+- **[QUICK-START.md](./QUICK-START.md)** - Database setup
+- **[FEATURES.md](./FEATURES.md)** - Feature documentation
+- **[ARCHITECTURE.md](./ARCHITECTURE.md)** - Technical architecture
+
+---
+
+## 🧪 Testing
+
+```bash
+# Run build test
+npm run build
+
+# Start production server
+npm start
 ```
 
-### Styling
-Modify `tailwind.config.ts` for design system changes:
-```typescript
-theme: {
-  extend: {
-    colors: {
-      // Add custom colors
-    },
-    fontFamily: {
-      // Add custom fonts
-    },
-  },
-}
-```
+---
 
 ## 📱 Browser Support
 
@@ -159,37 +169,41 @@ theme: {
 - Firefox (latest)
 - Safari (latest)
 - Edge (latest)
-- Mobile browsers (iOS Safari, Chrome Mobile)
+- Mobile browsers
 
-## 🤝 Contributing
+---
 
-1. Follow the existing code structure
-2. Maintain TypeScript strict mode compliance
-3. Use functional components with hooks
-4. Follow the DRY and SOLID principles
-5. Ensure mobile responsiveness
+## 🔒 Security
+
+- Row Level Security (RLS) enabled
+- Environment variables for secrets
+- Input validation
+- HTTPS on Vercel
+
+---
 
 ## 📄 License
 
 This project is private and proprietary.
 
-## 🆘 Troubleshooting
+---
 
-**Issue: Animations not working**
-- Ensure GSAP is installed: `npm install gsap`
-- Check browser console for errors
+## 🆘 Support
 
-**Issue: Supabase connection failing**
-- Verify environment variables in `.env.local`
-- Check Supabase project status
-- Ensure table schema matches expected structure
+For issues or questions:
+1. Check documentation files
+2. Review Vercel deployment logs
+3. Check Supabase connection
+4. Verify environment variables
 
-**Issue: Build errors**
-- Clear `.next` folder: `rm -rf .next`
-- Reinstall dependencies: `rm -rf node_modules && npm install`
-- Check Node.js version: `node --version` (should be 18.x+)
+---
 
-## 📞 Support
+## 🎯 Next Steps
 
-For issues or questions, please contact the development team.
+1. ✅ Set up environment variables
+2. ✅ Run database setup SQL
+3. ✅ Add your logo image
+4. ✅ Deploy to Vercel
+5. ✅ Test on production
 
+**Ready to deploy!** 🚀
