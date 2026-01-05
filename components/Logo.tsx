@@ -1,10 +1,36 @@
+'use client';
+
 import React from 'react';
+import Image from 'next/image';
 
 interface LogoProps {
   className?: string;
+  src?: string; // Path to your custom logo image
+  alt?: string;
 }
 
-const Logo: React.FC<LogoProps> = ({ className = 'w-24 h-24 sm:w-32 sm:h-32 md:w-36 md:h-36' }) => {
+const Logo: React.FC<LogoProps> = ({ 
+  className = 'w-24 h-24 sm:w-32 sm:h-32 md:w-36 md:h-36',
+  src,
+  alt = 'Times School Higher Education Logo'
+}) => {
+  // If custom image is provided, use it
+  if (src) {
+    return (
+      <div className={`relative ${className}`}>
+        <Image
+          src={src}
+          alt={alt}
+          fill
+          className="object-contain"
+          priority
+          sizes="(max-width: 640px) 96px, (max-width: 768px) 128px, 144px"
+        />
+      </div>
+    );
+  }
+
+  // Fallback to original SVG logo
   return (
     <svg width="140" height="140" viewBox="0 0 140 140" className={className}>
       <defs>
@@ -40,4 +66,3 @@ const Logo: React.FC<LogoProps> = ({ className = 'w-24 h-24 sm:w-32 sm:h-32 md:w
 };
 
 export default Logo;
-

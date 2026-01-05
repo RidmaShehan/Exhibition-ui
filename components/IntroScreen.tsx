@@ -114,7 +114,10 @@ const IntroScreen: React.FC<IntroScreenProps> = ({ onComplete }) => {
           className="mb-8 sm:mb-10 md:mb-12 flex justify-center opacity-0"
         >
           <div className="bg-gray-50 rounded-2xl sm:rounded-3xl p-4 sm:p-6 md:p-8 shadow-2xl border-2 border-gray-200">
-            <Logo />
+            <Logo 
+              src="/images/logo.png" 
+              alt="Times School Higher Education Logo"
+            />
           </div>
         </div>
 
