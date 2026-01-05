@@ -16,6 +16,11 @@ const IntroScreen: React.FC<IntroScreenProps> = ({ onComplete }) => {
   const subtitleRef = useRef<HTMLParagraphElement>(null);
 
   useEffect(() => {
+    // Ensure all refs are available
+    if (!logoContainerRef.current || !titleRef.current || !dividerRef.current || !subtitleRef.current || !containerRef.current) {
+      return;
+    }
+
     const tl = gsap.timeline({
       onComplete: () => {
         setTimeout(onComplete, 400);
@@ -23,71 +28,94 @@ const IntroScreen: React.FC<IntroScreenProps> = ({ onComplete }) => {
     });
 
     // Logo animation
-    tl.fromTo(
-      logoContainerRef.current,
-      { opacity: 0, scale: 0.8, y: 20 },
-      { opacity: 1, scale: 1, y: 0, duration: 0.8, ease: 'power3.out' }
-    );
+    if (logoContainerRef.current) {
+      tl.fromTo(
+        logoContainerRef.current,
+        { opacity: 0, scale: 0.8, y: 20 },
+        { opacity: 1, scale: 1, y: 0, duration: 0.8, ease: 'power3.out' }
+      );
+    }
 
     // Title animation - split into characters
     if (titleRef.current) {
-      const text = titleRef.current.textContent || '';
-      const words = text.split(' ');
-      titleRef.current.innerHTML = '';
+      try {
+        const text = titleRef.current.textContent || '';
+        const words = text.split(' ').filter(word => word.length > 0);
+        titleRef.current.innerHTML = '';
 
-      words.forEach((word) => {
-        const wordSpan = document.createElement('span');
-        wordSpan.style.display = 'inline-block';
-        wordSpan.style.marginRight = '0.3em';
+        words.forEach((word, index) => {
+          const wordSpan = document.createElement('span');
+          wordSpan.style.display = 'inline-block';
 
-        word.split('').forEach((letter) => {
-          const span = document.createElement('span');
-          span.textContent = letter;
-          span.style.display = 'inline-block';
-          span.className = 'letter';
-          wordSpan.appendChild(span);
+          word.split('').forEach((letter) => {
+            const span = document.createElement('span');
+            span.textContent = letter;
+            span.style.display = 'inline-block';
+            span.className = 'letter';
+            wordSpan.appendChild(span);
+          });
+
+          titleRef.current!.appendChild(wordSpan);
+
+          // Add space between words (except after the last word)
+          if (index < words.length - 1) {
+            const spaceSpan = document.createElement('span');
+            spaceSpan.textContent = ' ';
+            spaceSpan.style.display = 'inline-block';
+            spaceSpan.style.width = '0.3em';
+            spaceSpan.className = 'letter';
+            titleRef.current!.appendChild(spaceSpan);
+          }
         });
 
-        titleRef.current!.appendChild(wordSpan);
-      });
+        const letters = titleRef.current.querySelectorAll('.letter');
+        if (letters.length > 0) {
+          tl.fromTo(
+            letters,
+            { opacity: 0, y: 20 },
+            {
+              opacity: 1,
+              y: 0,
+              duration: 0.5,
+              stagger: 0.03,
+              ease: 'power2.out',
+            },
+            '-=0.3'
+          );
+        }
+      } catch (error) {
+        console.error('Error animating title:', error);
+      }
+    }
 
-      const letters = titleRef.current.querySelectorAll('.letter');
+    // Divider animation
+    if (dividerRef.current) {
       tl.fromTo(
-        letters,
+        dividerRef.current,
+        { scaleX: 0 },
+        { scaleX: 1, duration: 0.6, ease: 'power2.inOut' },
+        '-=0.2'
+      );
+    }
+
+    // Subtitle animation
+    if (subtitleRef.current) {
+      tl.fromTo(
+        subtitleRef.current,
         { opacity: 0, y: 20 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.5,
-          stagger: 0.03,
-          ease: 'power2.out',
-        },
+        { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' },
         '-=0.3'
       );
     }
 
-    // Divider animation
-    tl.fromTo(
-      dividerRef.current,
-      { scaleX: 0 },
-      { scaleX: 1, duration: 0.6, ease: 'power2.inOut' },
-      '-=0.2'
-    );
-
-    // Subtitle animation
-    tl.fromTo(
-      subtitleRef.current,
-      { opacity: 0, y: 20 },
-      { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' },
-      '-=0.3'
-    );
-
     // Fade out entire screen
-    tl.to(
-      containerRef.current,
-      { opacity: 0, y: -30, duration: 0.6, ease: 'power2.inOut' },
-      '+=1.5'
-    );
+    if (containerRef.current) {
+      tl.to(
+        containerRef.current,
+        { opacity: 0, y: -30, duration: 0.6, ease: 'power2.inOut' },
+        '+=1.5'
+      );
+    }
 
     return () => {
       tl.kill();

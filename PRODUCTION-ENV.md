@@ -6,6 +6,19 @@ Your app is configured to use **production environment variables** from Vercel, 
 
 ---
 
+## ⚠️ Important: No Database Connection Needed!
+
+**Your app uses Supabase REST API, NOT direct PostgreSQL connection.**
+
+You **do NOT need** to configure:
+- ❌ Database connection in Vercel
+- ❌ Session pooler
+- ❌ PostgreSQL connection string
+
+**You ONLY need environment variables!**
+
+---
+
 ## 🚀 Set Environment Variables in Vercel
 
 ### Step 1: Go to Vercel Dashboard
@@ -13,6 +26,8 @@ Your app is configured to use **production environment variables** from Vercel, 
 1. Visit [vercel.com](https://vercel.com)
 2. Select your project
 3. Go to **Settings** → **Environment Variables**
+
+**Note:** This is NOT a database connection setup. Just environment variables!
 
 ### Step 2: Add Production Variables
 

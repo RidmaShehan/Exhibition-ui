@@ -28,7 +28,9 @@ Your app will be live at: `https://your-project.vercel.app`
 
 ---
 
-## 📋 Environment Variables
+## 📋 Environment Variables (NOT Database Connection!)
+
+**⚠️ Important:** You only need environment variables. You do NOT need to set up a database connection in Vercel!
 
 Add these in Vercel Dashboard → Settings → Environment Variables:
 
