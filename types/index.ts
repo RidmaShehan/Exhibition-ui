@@ -34,6 +34,8 @@ export interface VisitorRecord {
   id: string;
   name: string;
   work_phone: string;
+  is_converted?: boolean;
+  converted_at?: string;
   created_at: string;
 }
 

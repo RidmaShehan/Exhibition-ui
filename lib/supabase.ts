@@ -79,6 +79,8 @@ export const submitVisitorRegistration = async (
         {
           name: formData.name,
           work_phone: formData.workPhone,
+          is_converted: false, // Default to not converted
+          converted_at: null,
         },
       ])
       .select()
@@ -133,6 +135,38 @@ export const submitVisitorRegistration = async (
 };
 
 /**
+ * Mark visitor as converted
+ */
+export const markVisitorAsConverted = async (
+  visitorId: string
+): Promise<{ success: boolean; error?: string }> => {
+  try {
+    if (!supabase) {
+      console.log('Demo mode: Would mark visitor as converted:', visitorId);
+      return { success: true };
+    }
+
+    const { error } = await supabase
+      .from('exhibition_visitors')
+      .update({
+        is_converted: true,
+        converted_at: new Date().toISOString(),
+      })
+      .eq('id', visitorId);
+
+    if (error) throw error;
+
+    return { success: true };
+  } catch (error) {
+    console.error('Error marking visitor as converted:', error);
+    return {
+      success: false,
+      error: error instanceof Error ? error.message : 'Unknown error occurred',
+    };
+  }
+};
+
+/**
  * Get visitor details by ID (for confirmation)
  */
 export const getVisitorDetails = async (
@@ -142,6 +176,8 @@ export const getVisitorDetails = async (
   work_phone: string;
   programs: string[];
   metadata: VisitorMetadata | null;
+  is_converted: boolean;
+  converted_at: string | null;
 } | null> => {
   if (!supabase) return null;
 
@@ -149,7 +185,7 @@ export const getVisitorDetails = async (
     // Get visitor
     const { data: visitor, error: visitorError } = await supabase
       .from('exhibition_visitors')
-      .select('name, work_phone')
+      .select('name, work_phone, is_converted, converted_at')
       .eq('id', visitorId)
       .single();
 
@@ -189,6 +225,8 @@ export const getVisitorDetails = async (
       work_phone: visitor.work_phone,
       programs: programNames,
       metadata: metadata || null,
+      is_converted: visitor.is_converted || false,
+      converted_at: visitor.converted_at || null,
     };
   } catch (error) {
     console.error('Error fetching visitor details:', error);
