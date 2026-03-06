@@ -42,8 +42,10 @@ END $$;
 CREATE INDEX IF NOT EXISTS idx_visitors_is_converted ON exhibition_visitors(is_converted);
 CREATE INDEX IF NOT EXISTS idx_visitors_converted_at ON exhibition_visitors(converted_at DESC);
 
--- Update the view to include conversion fields
-CREATE OR REPLACE VIEW visitor_details AS
+-- Drop the view if it exists, then recreate with conversion fields
+DROP VIEW IF EXISTS visitor_details;
+
+CREATE VIEW visitor_details AS
 SELECT 
   v.id,
   v.name,

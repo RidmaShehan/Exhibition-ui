@@ -119,7 +119,10 @@ CREATE INDEX IF NOT EXISTS idx_visitor_metadata_submission_date ON visitor_metad
 -- ============================================
 
 -- View: Complete visitor information with programs
-CREATE OR REPLACE VIEW visitor_details AS
+-- Drop if exists to avoid conflicts
+DROP VIEW IF EXISTS visitor_details;
+
+CREATE VIEW visitor_details AS
 SELECT 
   v.id,
   v.name,

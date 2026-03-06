@@ -113,7 +113,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
 
           <div ref={phoneRef} className="opacity-0">
             <label className="block text-xs sm:text-sm font-bold text-black mb-1.5 sm:mb-2 uppercase tracking-wide">
-              Work Phone Number <span className="text-red-500">*</span>
+              Phone Number <span className="text-red-500">*</span>
             </label>
             <input
               type="tel"
