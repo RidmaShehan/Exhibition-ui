@@ -76,7 +76,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
         <div ref={headerRef} className="text-center mb-6 sm:mb-8 md:mb-10 opacity-0">
           <div className="inline-block bg-black rounded-xl sm:rounded-2xl px-4 sm:px-5 md:px-6 py-1.5 sm:py-2 mb-3 sm:mb-4">
             <span className="text-white font-semibold text-xs sm:text-sm tracking-wider">
-              Apply
+              Application Form
             </span>
           </div>
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-black mb-2 sm:mb-3">
@@ -124,7 +124,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
               className={`w-full px-3 sm:px-4 md:px-5 py-3 sm:py-3.5 md:py-4 border-2 ${
                 errors.workPhone ? 'border-red-400 bg-red-50' : 'border-gray-300 focus:border-black'
               } rounded-lg sm:rounded-xl focus:outline-none transition-all text-sm sm:text-base text-black placeholder-gray-400 bg-white`}
-              placeholder="+1 (555) 000-0000"
+              placeholder="+94 71 234 5678"
               disabled={isSubmitting}
             />
             {errors.workPhone && (
@@ -157,7 +157,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
               </>
             ) : (
               <>
-                <span className="text-sm sm:text-base md:text-lg">Submit Registration</span>
+                <span className="text-sm sm:text-base md:text-lg">Submit Application</span>
                 <span className="text-xl sm:text-2xl">→</span>
               </>
             )}

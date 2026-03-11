@@ -158,7 +158,7 @@ const IntroScreen: React.FC<IntroScreenProps> = ({ onComplete }) => {
         </h1>
         <div ref={dividerRef} className="h-1 w-24 sm:w-32 bg-yellow-400 mx-auto mb-4 sm:mb-5 md:mb-6 rounded-full" />
         <p ref={subtitleRef} className="text-lg sm:text-xl md:text-2xl text-gray-600 font-light px-4 opacity-0">
-          Registration Portal
+          Appling Portal
         </p>
       </div>
     </div>
