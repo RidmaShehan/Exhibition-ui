@@ -102,13 +102,13 @@ const SuccessScreen: React.FC<SuccessScreenProps> = ({ formData, programs, onRes
             ref={titleRef}
             className="text-2xl sm:text-3xl md:text-4xl font-bold text-black mb-3 sm:mb-4 opacity-0"
           >
-            Registration Complete!
+            Apply Complete!
           </h2>
           <p
             ref={descRef}
             className="text-sm sm:text-base md:text-lg text-gray-600 mb-6 sm:mb-8 px-2 opacity-0"
           >
-            Thank you for registering with Times School Higher Education
+            Thank you for Jion with Times School Higher Education
           </p>
           <div
             ref={detailsRef}
@@ -154,7 +154,7 @@ const SuccessScreen: React.FC<SuccessScreenProps> = ({ formData, programs, onRes
           onClick={onReset}
           className="opacity-0 w-full bg-black text-white py-3.5 sm:py-4 md:py-5 rounded-lg sm:rounded-xl font-bold text-base sm:text-lg hover:bg-gray-800 transform hover:scale-[1.02] active:scale-[0.98] transition-all shadow-xl hover:shadow-2xl flex items-center justify-center gap-2 sm:gap-3"
         >
-          <span className="text-sm sm:text-base md:text-lg">Register Another Visitor</span>
+          <span className="text-sm sm:text-base md:text-lg">Apply Another Visitor</span>
           <span className="text-xl sm:text-2xl">+</span>
         </button>
       </div>

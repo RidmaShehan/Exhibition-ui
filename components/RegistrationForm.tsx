@@ -76,7 +76,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
         <div ref={headerRef} className="text-center mb-6 sm:mb-8 md:mb-10 opacity-0">
           <div className="inline-block bg-black rounded-xl sm:rounded-2xl px-4 sm:px-5 md:px-6 py-1.5 sm:py-2 mb-3 sm:mb-4">
             <span className="text-white font-semibold text-xs sm:text-sm tracking-wider">
-              REGISTRATION
+              Apply
             </span>
           </div>
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-black mb-2 sm:mb-3">

@@ -105,7 +105,7 @@ const ExhibitionRegistration: React.FC = () => {
         throw new Error(result.error);
       }
 
-      console.log('Registration successful!', {
+      console.log('Apply successful!', {
         visitorId: result.visitorId,
         metadata,
       });
@@ -113,7 +113,7 @@ const ExhibitionRegistration: React.FC = () => {
       setIsSuccess(true);
     } catch (error) {
       console.error('Submission error:', error);
-      alert('An error occurred during registration. Please try again.');
+      alert('An error occurred during Apply. Please try again.');
     } finally {
       setIsSubmitting(false);
     }
