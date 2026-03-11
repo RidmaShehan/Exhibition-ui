@@ -157,7 +157,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
               </>
             ) : (
               <>
-                <span className="text-sm sm:text-base md:text-lg">Submit Application</span>
+                <span className="text-sm sm:text-base md:text-lg">Submit </span>
                 <span className="text-xl sm:text-2xl">→</span>
               </>
             )}
