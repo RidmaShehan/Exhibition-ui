@@ -4,7 +4,7 @@ import { SpeedInsights } from '@vercel/speed-insights/next';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: 'Times School Higher Education - Exhibition Registration',
+  title: 'Application Form - Times School of Higher Education',
   description: 'Register for the Times School Higher Education Exhibition',
 };
 
