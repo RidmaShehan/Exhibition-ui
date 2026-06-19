@@ -136,7 +136,7 @@ const ExhibitionRegistration: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 flex items-center justify-center p-3 sm:p-4 md:p-6 relative overflow-hidden">
+    <div className="min-h-screen bg-slate-50 flex items-center justify-center p-3 sm:p-4 md:p-6 relative overflow-y-auto">
       {/* Background pattern */}
       <div className="absolute inset-0 opacity-5">
         <div

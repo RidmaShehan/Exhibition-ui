@@ -219,7 +219,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
         <div className="h-1 w-16 bg-blue-600 rounded-full mt-1.5" />
       </div>
 
-      <div ref={cardRef} className="bg-white rounded-2xl sm:rounded-3xl shadow-[0_20px_50px_rgba(15,23,42,0.06)] p-6 sm:p-8 md:p-10 border border-slate-100 opacity-0">
+      <div ref={cardRef} className="bg-white rounded-2xl sm:rounded-3xl shadow-[0_20px_50px_rgba(15,23,42,0.06)] p-6 sm:p-8 md:p-10 border border-slate-100 opacity-0 overflow-visible">
         
         {/* Subtitle / Enquiry description */}
         <div className="text-center mb-6">
