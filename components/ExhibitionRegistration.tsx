@@ -2,7 +2,6 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import gsap from 'gsap';
-import IntroScreen from './IntroScreen';
 import RegistrationForm from './RegistrationForm';
 import SuccessScreen from './SuccessScreen';
 import PaperPlane from './PaperPlane';
@@ -14,11 +13,11 @@ import { captureVisitorMetadata } from '@/lib/metadata';
 const INITIAL_FORM_DATA: VisitorFormData = {
   name: '',
   workPhone: '',
-  selectedPrograms: [],
+  district: '',
+  selectedProgramId: null,
 };
 
 const ExhibitionRegistration: React.FC = () => {
-  const [showIntro, setShowIntro] = useState(true);
   const [formData, setFormData] = useState<VisitorFormData>(INITIAL_FORM_DATA);
   const [errors, setErrors] = useState<FormErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -28,7 +27,7 @@ const ExhibitionRegistration: React.FC = () => {
 
   const planeRef = useRef<HTMLDivElement>(null);
 
-  // Fetch programs on mount
+  // Fetch programs from Supabase on mount
   useEffect(() => {
     const loadPrograms = async () => {
       setIsLoadingPrograms(true);
@@ -40,10 +39,6 @@ const ExhibitionRegistration: React.FC = () => {
     loadPrograms();
   }, []);
 
-  const handleIntroComplete = () => {
-    setShowIntro(false);
-  };
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -54,12 +49,21 @@ const ExhibitionRegistration: React.FC = () => {
     }
   };
 
-  const handleProgramsChange = (programIds: number[]) => {
-    setFormData((prev) => ({ ...prev, selectedPrograms: programIds }));
+  const handleSelectDistrict = (district: string) => {
+    setFormData((prev) => ({ ...prev, district }));
 
-    // Clear programs error
-    if (errors.selectedPrograms) {
-      setErrors((prev) => ({ ...prev, selectedPrograms: '' }));
+    // Clear error
+    if (errors.district) {
+      setErrors((prev) => ({ ...prev, district: '' }));
+    }
+  };
+
+  const handleSelectProgram = (programId: number) => {
+    setFormData((prev) => ({ ...prev, selectedProgramId: programId }));
+
+    // Clear error
+    if (errors.selectedProgramId) {
+      setErrors((prev) => ({ ...prev, selectedProgramId: '' }));
     }
   };
 
@@ -131,12 +135,8 @@ const ExhibitionRegistration: React.FC = () => {
     setIsSuccess(false);
   };
 
-  if (showIntro) {
-    return <IntroScreen onComplete={handleIntroComplete} />;
-  }
-
   return (
-    <div className="min-h-screen bg-white flex items-center justify-center p-3 sm:p-4 md:p-6 relative overflow-hidden">
+    <div className="min-h-screen bg-slate-50 flex items-center justify-center p-3 sm:p-4 md:p-6 relative overflow-hidden">
       {/* Background pattern */}
       <div className="absolute inset-0 opacity-5">
         <div
@@ -153,9 +153,9 @@ const ExhibitionRegistration: React.FC = () => {
 
       {/* Main Content */}
       {isLoadingPrograms ? (
-        <div className="text-center">
-          <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-black"></div>
-          <p className="mt-4 text-gray-600">Loading programs...</p>
+        <div className="text-center relative z-10">
+          <div className="inline-block animate-spin rounded-full h-12 w-12 border-4 border-slate-200 border-t-blue-600"></div>
+          <p className="mt-4 text-slate-500 font-medium tracking-wide">Loading Programs...</p>
         </div>
       ) : !isSuccess ? (
         <RegistrationForm
@@ -164,7 +164,8 @@ const ExhibitionRegistration: React.FC = () => {
           isSubmitting={isSubmitting}
           programs={programs}
           onChange={handleChange}
-          onProgramsChange={handleProgramsChange}
+          onSelectDistrict={handleSelectDistrict}
+          onSelectProgram={handleSelectProgram}
           onSubmit={handleSubmit}
           onKeyPress={handleKeyPress}
         />

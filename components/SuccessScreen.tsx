@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useRef } from 'react';
-import { CheckCircle } from 'lucide-react';
+import { CheckCircle, PhoneCall, User, Calendar, RotateCcw, MapPin, GraduationCap } from 'lucide-react';
 import gsap from 'gsap';
 import { VisitorFormData, Program } from '@/types';
 
@@ -19,10 +19,8 @@ const SuccessScreen: React.FC<SuccessScreenProps> = ({ formData, programs, onRes
   const detailsRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
 
-  // Get selected program names
-  const selectedProgramNames = programs
-    .filter((p) => formData.selectedPrograms.includes(p.id))
-    .map((p) => p.program_name);
+  // Find the program name from the program list
+  const selectedProgramName = programs.find((p) => p.id === formData.selectedProgramId)?.program_name;
 
   useEffect(() => {
     const tl = gsap.timeline();
@@ -44,7 +42,7 @@ const SuccessScreen: React.FC<SuccessScreenProps> = ({ formData, programs, onRes
 
     // Add continuous subtle bounce to icon
     tl.to(iconRef.current, {
-      y: -10,
+      y: -8,
       duration: 0.6,
       repeat: -1,
       yoyo: true,
@@ -89,73 +87,88 @@ const SuccessScreen: React.FC<SuccessScreenProps> = ({ formData, programs, onRes
   }, []);
 
   return (
-    <div ref={containerRef} className="w-full max-w-2xl relative z-10 opacity-0">
-      <div className="bg-gray-50 rounded-2xl sm:rounded-3xl shadow-2xl p-5 sm:p-6 md:p-8 lg:p-10 text-center border-2 border-gray-200">
-        <div className="mb-5 sm:mb-6">
+    <div ref={containerRef} className="w-full max-w-xl relative z-10 opacity-0 px-2 sm:px-0">
+      <div className="bg-white/95 backdrop-blur-md rounded-2xl sm:rounded-3xl shadow-[0_20px_50px_rgba(15,23,42,0.06)] p-6 sm:p-8 md:p-10 text-center border border-slate-100">
+        <div className="mb-6">
+          
+          {/* Re-themed checkmark icon to Blue/Red theme */}
           <div
             ref={iconRef}
-            className="w-20 h-20 sm:w-24 sm:h-24 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-6"
+            className="w-20 h-20 sm:w-24 sm:h-24 bg-blue-50 rounded-full flex items-center justify-center mx-auto mb-6 border border-blue-100"
           >
-            <CheckCircle className="w-12 h-12 sm:w-14 sm:h-14 text-green-600" />
+            <CheckCircle className="w-10 h-10 sm:w-12 sm:h-12 text-blue-600" />
           </div>
           <h2
             ref={titleRef}
-            className="text-2xl sm:text-3xl md:text-4xl font-bold text-black mb-3 sm:mb-4 opacity-0"
+            className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight mb-3 opacity-0"
           >
-            Apply Complete!
+            Enquiry Received!
           </h2>
           <p
             ref={descRef}
-            className="text-sm sm:text-base md:text-lg text-gray-600 mb-6 sm:mb-8 px-2 opacity-0"
+            className="text-sm sm:text-base text-slate-500 mb-8 max-w-md mx-auto leading-relaxed opacity-0"
           >
-            Thank you for Jion with Times School Higher Education
+            Thank you for reaching out to Times School of Higher Education. Our academic advisors will call you shortly to guide you.
           </p>
+          
+          {/* Details Card with red/blue icons */}
           <div
             ref={detailsRef}
-            className="bg-white rounded-xl sm:rounded-2xl p-4 sm:p-5 md:p-6 text-left space-y-3 sm:space-y-4 mb-6 sm:mb-8 border-2 border-gray-200 opacity-0"
+            className="bg-slate-50 rounded-2xl p-5 sm:p-6 text-left space-y-4 mb-8 border border-slate-100 opacity-0"
           >
-            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center pb-3 border-b border-gray-200 gap-1 sm:gap-0">
-              <span className="text-xs sm:text-sm font-bold text-gray-500 uppercase tracking-wide">
-                Name
+            <div className="flex justify-between items-center pb-3.5 border-b border-slate-200/60">
+              <span className="text-xs sm:text-sm font-bold text-slate-400 uppercase tracking-wider flex items-center gap-2">
+                <User className="w-4 h-4 text-blue-600" /> Name
               </span>
-              <span className="text-sm sm:text-base text-black font-semibold break-words">
+              <span className="text-sm sm:text-base text-slate-800 font-semibold break-all ml-4">
                 {formData.name}
               </span>
             </div>
-            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center pb-3 border-b border-gray-200 gap-1 sm:gap-0">
-              <span className="text-xs sm:text-sm font-bold text-gray-500 uppercase tracking-wide">
-                Phone
+            <div className="flex justify-between items-center pb-3.5 border-b border-slate-200/60">
+              <span className="text-xs sm:text-sm font-bold text-slate-400 uppercase tracking-wider flex items-center gap-2">
+                <PhoneCall className="w-4 h-4 text-blue-600" /> Phone
               </span>
-              <span className="text-sm sm:text-base text-black font-semibold break-words">
+              <span className="text-sm sm:text-base text-slate-800 font-semibold break-all ml-4">
                 {formData.workPhone}
               </span>
             </div>
-            {selectedProgramNames.length > 0 && (
-              <div className="flex flex-col gap-2 pt-1">
-                <span className="text-xs sm:text-sm font-bold text-gray-500 uppercase tracking-wide">
-                  Selected Programs ({selectedProgramNames.length})
+            <div className="flex justify-between items-center pb-3.5 border-b border-slate-200/60">
+              <span className="text-xs sm:text-sm font-bold text-slate-400 uppercase tracking-wider flex items-center gap-2">
+                <MapPin className="w-4 h-4 text-blue-600" /> District
+              </span>
+              <span className="text-sm sm:text-base text-slate-800 font-semibold ml-4">
+                {formData.district}
+              </span>
+            </div>
+            {selectedProgramName && (
+              <div className="flex justify-between items-center pb-3.5 border-b border-slate-200/60">
+                <span className="text-xs sm:text-sm font-bold text-slate-400 uppercase tracking-wider flex items-center gap-2">
+                  <GraduationCap className="w-4 h-4 text-blue-600" /> Program
                 </span>
-                <div className="flex flex-wrap gap-2">
-                  {selectedProgramNames.map((programName, index) => (
-                    <span
-                      key={index}
-                      className="inline-flex items-center px-3 py-1.5 bg-black text-white text-xs sm:text-sm font-medium rounded-lg"
-                    >
-                      {programName}
-                    </span>
-                  ))}
-                </div>
+                <span className="text-sm sm:text-base text-slate-800 font-semibold ml-4 text-right break-words max-w-[60%]">
+                  {selectedProgramName}
+                </span>
               </div>
             )}
+            <div className="flex justify-between items-center pt-0.5">
+              <span className="text-xs sm:text-sm font-bold text-slate-400 uppercase tracking-wider flex items-center gap-2">
+                <Calendar className="w-4 h-4 text-blue-600" /> Date
+              </span>
+              <span className="text-sm sm:text-base text-slate-800 font-semibold ml-4">
+                {new Date().toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' })}
+              </span>
+            </div>
           </div>
         </div>
+        
+        {/* Reset button matching Blue/Red theme (Royal Blue button with red-accented rotate icon) */}
         <button
           ref={buttonRef}
           onClick={onReset}
-          className="opacity-0 w-full bg-black text-white py-3.5 sm:py-4 md:py-5 rounded-lg sm:rounded-xl font-bold text-base sm:text-lg hover:bg-gray-800 transform hover:scale-[1.02] active:scale-[0.98] transition-all shadow-xl hover:shadow-2xl flex items-center justify-center gap-2 sm:gap-3"
+          className="opacity-0 w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white py-4 rounded-xl font-bold text-base sm:text-lg focus:outline-none focus:ring-4 focus:ring-blue-500/25 active:scale-[0.99] transition-all shadow-[0_10px_25px_-5px_rgba(37,99,235,0.2)] hover:shadow-[0_15px_30px_-5px_rgba(37,99,235,0.35)] flex items-center justify-center gap-2 sm:gap-2.5"
         >
-          <span className="text-sm sm:text-base md:text-lg">Apply Another Visitor</span>
-          <span className="text-xl sm:text-2xl">+</span>
+          <RotateCcw className="w-5 h-5 text-rose-300 group-hover:rotate-45 transition-transform duration-200" />
+          <span>Submit Another Enquiry</span>
         </button>
       </div>
     </div>

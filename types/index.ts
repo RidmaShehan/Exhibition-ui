@@ -1,13 +1,15 @@
 export interface VisitorFormData {
   name: string;
   workPhone: string;
-  selectedPrograms: number[]; // Array of program IDs
+  district: string;
+  selectedProgramId: number | null;
 }
 
 export interface FormErrors {
   name?: string;
   workPhone?: string;
-  selectedPrograms?: string;
+  district?: string;
+  selectedProgramId?: string;
 }
 
 export interface Program {
